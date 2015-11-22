@@ -1,0 +1,135 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="clock" width="600" height="600"></canvas>
+<div id="digital-clock"></div>
+<h1>Louis XIV-heures-trente</h1>
+
+<p>Une horloge avec des puissants</p>
+
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    var clock = document.getElementById('clock');
+    var digitalClock = document.getElementById('digital-clock');
+    var ctx = clock.getContext("2d");
+
+    var images = {
+        12: {
+            source: 'img/12.jpg',
+            position: {
+                x: -105,
+                y: -50
+            },
+            width: 400
+        }
+    };
+
+    var center = {x: 300, y: 300};
+    var radius = 250;
+
+    var drawImage = function (now) {
+        var image = images[now.getHours()];
+        if (!image.img) {
+            image.img = new Image();
+            image.img.src = image.source;
+        }
+        image.height = image.img.height * image.width / image.img.width;
+        ctx.drawImage(image.img,
+                center.x + image.position.x - image.width / 2,
+                center.y + image.position.y - image.height / 2,
+                image.width,
+                image.height);
+    };
+    var drawClock = function (now) {
+        // draw clock disk
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'rgba(236, 129, 9, 0.2)';
+        ctx.fill();
+        ctx.closePath();
+
+        // 3 - 6 - 9 - 12
+        for (var i = 0; i < 4; i++) {
+            ctx.beginPath();
+            ctx.moveTo(
+                    center.x + (radius - 30) * Math.cos(i * Math.PI / 2),
+                    center.y + (radius - 30) * Math.sin(i * Math.PI / 2));
+            ctx.lineTo(
+                    center.x + (radius + 30) * Math.cos(i * Math.PI / 2),
+                    center.y + (radius + 30) * Math.sin(i * Math.PI / 2));
+            ctx.lineWidth = 19;
+            ctx.strokeStyle = 'rgba(236, 129, 9, 1)';
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        // 1 - 2 - 4 - 5 - 7 - 8 - 10 - 11
+        for (var i = 0; i < 4; i++) {
+            for (var j = 1; j < 3; j++) {
+                ctx.beginPath();
+                ctx.moveTo(
+                        center.x + (radius - 50) * Math.cos((i * 3 + j) * Math.PI / 6),
+                        center.y + (radius - 50) * Math.sin((i * 3 + j) * Math.PI / 6));
+                ctx.lineTo(
+                        center.x + (radius + 50) * Math.cos((i * 3 + j) * Math.PI / 6),
+                        center.y + (radius + 50) * Math.sin((i * 3 + j) * Math.PI / 6));
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = 'rgba(236, 129, 9, 1)';
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+
+        // draw minutes
+        for (var i = 0; i <= now.getMinutes(); i++) {
+            ctx.beginPath();
+            ctx.arc(
+                    center.x + radius * Math.cos(i * 2 * Math.PI / 60 - Math.PI / 2),
+                    center.y + radius * Math.sin(i * 2 * Math.PI / 60 - Math.PI / 2),
+                    3,
+                    0,
+                    Math.PI * 2,
+                    true);
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+        }
+        // draw seconds
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, radius, -Math.PI / 2, now.getSeconds() * 2 * Math.PI / 60 - Math.PI / 2);
+        ctx.stroke();
+        ctx.closePath();
+    };
+
+    var drawDigitalClock = function (now) {
+        digitalClock.textContent = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    };
+
+    var clockWork = function () {
+        var now = new Date();
+
+        ctx.clearRect(0, 0, clock.width, clock.height);
+        drawImage(now);
+        drawClock(now);
+        drawDigitalClock(now);
+
+        setTimeout(clockWork, 500);
+    };
+
+    var resizeClock = function () {
+        clock.width = $(window).width();
+        clock.height = $(window).height();
+        center.x = Math.ceil(clock.width / 2);
+        center.y = Math.ceil(clock.height / 2);
+    };
+
+
+    $(window).on('resize', resizeClock());
+
+    resizeClock();
+    clockWork();
+</script>
+</body>
+</html>

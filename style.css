@@ -1,0 +1,16 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: black;
+  color: whitesmoke;
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+#digital-clock {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
