@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Vollkorn:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <canvas id="clock" width="600" height="600"></canvas>
@@ -42,14 +43,18 @@
     </table>
 </div>
 
-<h1>Louis XIV-heures-trente</h1>
+<div id="legend">
+    <h1>L<span>ouis</span> XIV<blink>:</blink>30</h1>
+    <a href="" id="image-title"></a>
+</div>
 
-<p>Une horloge avec des puissants</p>
 
 <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
     var clock = document.getElementById('clock');
     var ctx = clock.getContext("2d");
+
+    var $imageTitle = $('#image-title');
 
     // debug mode
     var DEBUG = false;
@@ -64,7 +69,6 @@
         if (!image.img) {
             image.img = new Image();
             image.img.onload = function () {
-                image.loaded = true;
                 resetDebug();
             };
             image.img.src = image.source;
@@ -104,31 +108,33 @@
             y: -50
         },
         width: 400,
-        loaded: false
+        title: 'Saint Jean-Baptiste, L&eacute;onard de Vinci, 1513-1516',
+        url: 'https://fr.wikipedia.org/wiki/Saint_Jean-Baptiste_(L%C3%A9onard_de_Vinci)'
     }, {
         source: 'img/12.jpg',
         position: {
             x: 0,
             y: 0
         },
-        width: 400,
-        loaded: false
+        width: 400
     }, {
         source: 'img/2.jpg',
         position: {
-            x: 70,
-            y: 20
+            x: 60,
+            y: 33
         },
-        width: 600,
-        loaded: false
+        width: 700,
+        title: 'Bacchus, L&eacute;onard de Vinci, 1510-1515',
+        url: 'https://fr.wikipedia.org/wiki/Bacchus_(L%C3%A9onard_de_Vinci)'
     }, {
         source: 'img/3.jpg',
         position: {
-            x: 90,
-            y: -107
+            x: 74,
+            y: -121
         },
-        width: 900,
-        loaded: false
+        width: 1000,
+        title: 'Gabrielle d\'Estr&eacute;es et une de ses soeurs, artiste inconnu, 1594-1595',
+        url: 'https://fr.wikipedia.org/wiki/Gabrielle_d%27Estr%C3%A9es_et_une_de_ses_s%C5%93urs'
     }, {
         source: 'img/4.jpg',
         position: {
@@ -136,31 +142,31 @@
             y: 80
         },
         width: 500,
-        loaded: false
+        title: 'Louis XIV &agrave; l\'&acirc;ge de 10 ans, Henri Testelin, 1648',
+        url: 'https://fr.wikipedia.org/wiki/Henri_Testelin'
     }, {
         source: 'img/12.jpg',
         position: {
             x: 0,
             y: 0
         },
-        width: 400,
-        loaded: false
+        width: 400
     }, {
         source: 'img/6-fullres.jpg',
         position: {
             x: 5,
             y: 80
         },
-        width: 500,
-        loaded: false
+        width: 520,
+        title: 'Henri IV vainqueur de la Ligue repr&eacute;sent&eacute; en Mars, Jacob Bunel, 1605-1606',
+        url: 'https://fr.wikipedia.org/wiki/Henri_IV_(roi_de_France)'
     }, {
         source: 'img/12.jpg',
         position: {
             x: 0,
             y: 0
         },
-        width: 400,
-        loaded: false
+        width: 400
     }, {
         source: 'img/8.jpg',
         position: {
@@ -168,23 +174,24 @@
             y: 40
         },
         width: 500,
-        loaded: false
+        title: 'Cardinal de Richelieu, Philippe de Champaigne, 1633-1640',
+        url: 'https://fr.wikipedia.org/wiki/Armand_Jean_du_Plessis_de_Richelieu'
     }, {
         source: 'img/9.png',
         position: {
-            x: -115,
-            y: 15
+            x: -80,
+            y: 21
         },
-        width: 900,
-        loaded: false
+        width: 1200,
+        title: 'La cr&eacute;ation d\'Adam, Michel-Ange, 1508-1512',
+        url: 'https://fr.wikipedia.org/wiki/La_Cr%C3%A9ation_d%27Adam_(Michel-Ange)'
     }, {
         source: 'img/12.jpg',
         position: {
             x: 0,
             y: 0
         },
-        width: 400,
-        loaded: false
+        width: 400
     }, {
         source: 'img/11.jpg',
         position: {
@@ -192,7 +199,8 @@
             y: 100
         },
         width: 500,
-        loaded: false
+        title: 'Bonaparte franchissant le Grand-Saint-Bernard, Jacques-Louis David, 1801',
+        url: 'https://fr.wikipedia.org/wiki/Bonaparte_franchissant_le_Grand-Saint-Bernard'
     }];
 
     var center = {x: 300, y: 300};
@@ -236,7 +244,7 @@
             ctx.lineTo(
                     center.x + (radius + 30) * Math.cos(i * Math.PI / 2),
                     center.y + (radius + 30) * Math.sin(i * Math.PI / 2));
-            ctx.lineWidth = 19;
+            ctx.lineWidth = 14;
             ctx.strokeStyle = 'rgba(236, 129, 9, 1)';
             ctx.stroke();
             ctx.closePath();
@@ -277,9 +285,15 @@
         // draw seconds
         ctx.beginPath();
         ctx.arc(center.x, center.y, radius, -Math.PI / 2, now.getSeconds() * 2 * Math.PI / 60 - Math.PI / 2);
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.stroke();
         ctx.closePath();
+    };
+
+    var drawTitle = function (now) {
+        var image = images[DEBUG ? $('#debug-hour').val() : now.getHours() % 12];
+        $imageTitle.attr('href', image.url);
+        $imageTitle.html(image.title);
     };
 
     var clockWork = function () {
@@ -288,6 +302,7 @@
         ctx.clearRect(0, 0, clock.width, clock.height);
         drawImage(now);
         drawClock(now);
+        drawTitle(now);
 
         setTimeout(clockWork, 500);
     };
@@ -297,6 +312,9 @@
         clock.height = $(window).height();
         center.x = Math.ceil(clock.width / 2);
         center.y = Math.ceil(clock.height / 2);
+
+        // this margin leaves room for the title
+        center.y -= 30;
     };
 
     $(window).on('resize', resizeClock);
