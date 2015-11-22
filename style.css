@@ -5,6 +5,7 @@
 }
 html {
     height: 100%;
+    font-size: 14px;
 }
 
 body {
@@ -14,9 +15,10 @@ body {
     font-family: sans-serif;
     padding: 0;
     margin: 0;
-    font-size: 14px;
+    font-size: 1rem;
     text-align: center;
     font-family: 'Vollkorn', serif;
+    overflow: hidden;
 }
 
 #debug {
@@ -54,14 +56,20 @@ body {
     text-align: center;
 }
 
+#legend-container {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
 #legend {
-    display: inline-block;
     position: relative;
-    margin: -130px auto 0 auto;
+    display: inline-block;
+    margin: 0 auto 0 auto;
     border: 3px solid rgb(236, 129, 9);
     background-color: black;
     padding: 10px 50px;
-    text-align: center;
     color: rgb(236, 129, 9);
 }
 
@@ -121,4 +129,36 @@ blink {
     60% { opacity: 0 }
     90% { opacity: 1 }
     100% { opacity: 1 }
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: whitesmoke;
+    color: #333;
+    text-align: left;
+    padding: 5px 20px;
+}
+footer a {
+    color: inherit;
+}
+
+.footer__social-media {
+    float: right;
+    font-size: 1.75rem;
+    display: inline-block;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.75rem;
+    text-align: center;
+    background-color: whitesmoke;
+    border: 1px solid #333;
+    color: #333;
+    padding-top: 3px;
+}
+.footer__social-media:hover {
+    background-color: #333;
+    color: whitesmoke;
 }
