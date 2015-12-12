@@ -103,10 +103,14 @@
         $heightSpan.text(Math.round(image.img.height * parseFloat($widthInput.val()) / image.img.width));
     };
 
-    var enableDebug = function () {
+    var enableDebug = function (debugHour) {
         DEBUG = true;
-        var now = new Date();
-        $hourSelect.val(now.getHours() % 12);
+        if (debugHour) {
+            $hourSelect.val(debugHour % 12);
+        } else {
+            var now = new Date();
+            $hourSelect.val(now.getHours() % 12);
+        }
         resetDebug();
         $hourSelect.on('change', resetDebug);
         $widthInput.on('change', updateHeight);
@@ -183,12 +187,14 @@
         title: 'Henri IV vainqueur de la Ligue représenté en Mars, Jacob Bunel, 1605-1606',
         url: 'https://fr.wikipedia.org/wiki/Henri_IV_(roi_de_France)'
     }, {
-        source: 'img/12.jpg',
+        source: 'img/7-fullres.jpg',
         position: {
-            x: 0,
-            y: 0
+            x: 30,
+            y: -30
         },
-        width: 400
+        width: 350,
+        title: 'Marguerite de Sève, Nicolas de Largillière',
+        url: 'https://en.wikipedia.org/wiki/Nicolas_de_Largilli%C3%A8re'
     }, {
         source: 'img/8.jpg',
         position: {
@@ -208,12 +214,14 @@
         title: 'La création d\'Adam, Michel-Ange, 1508-1512',
         url: 'https://fr.wikipedia.org/wiki/La_Cr%C3%A9ation_d%27Adam_(Michel-Ange)'
     }, {
-        source: 'img/12.jpg',
+        source: 'img/10-fullres.jpg',
         position: {
-            x: 0,
-            y: 0
+            x: 20,
+            y: 100
         },
-        width: 400
+        width: 400,
+        title: 'Autoportrait en Allégorie de la peinture, Artemisia Gentileschi, 1638-1939',
+        url: 'https://fr.wikipedia.org/wiki/Artemisia_Gentileschi'
     }, {
         source: 'img/11.jpg',
         position: {
