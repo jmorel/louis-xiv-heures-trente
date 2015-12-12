@@ -314,7 +314,8 @@
         }
         // draw seconds
         ctx.beginPath();
-        ctx.arc(center.x, center.y, radius, -Math.PI / 2, now.getSeconds() * 2 * Math.PI / 60 - Math.PI / 2);
+        var angle = (now.getSeconds() + now.getMilliseconds()/1000) * 2 * Math.PI / 60;
+        ctx.arc(center.x, center.y, radius, -Math.PI / 2, angle - Math.PI / 2);
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.closePath();
@@ -334,7 +335,7 @@
         drawClock(now);
         drawTitle(now);
 
-        setTimeout(clockWork, 1000);
+        setTimeout(clockWork, 30);
     };
 
     var resizeClock = function () {
