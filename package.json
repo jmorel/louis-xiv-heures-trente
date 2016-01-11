@@ -1,0 +1,12 @@
+{
+  "name": "louis-xiv-heures-trente",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "cssnano": "^3.4.0",
+    "gulp": "~3.9.0",
+    "gulp-autoprefixer": "~3.0.2",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-rename": "^1.2.2"
+  }
+}
