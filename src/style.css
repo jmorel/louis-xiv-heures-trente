@@ -3,6 +3,7 @@
 *:after {
     box-sizing: border-box;
 }
+
 html {
     height: 100%;
     font-size: 14px;
@@ -63,6 +64,7 @@ body {
     right: 0;
     text-align: center;
 }
+
 #legend {
     position: relative;
     display: inline-block;
@@ -88,6 +90,7 @@ body {
     background-color: black;
     transform: rotateZ(-45deg);
 }
+
 #legend:before {
     left: -30px;
     border-color: rgb(236, 129, 9) black black rgb(236, 129, 9);
@@ -103,10 +106,12 @@ body {
     font-weight: normal;
     font-size: 28px
 }
+
 #legend h1 span {
     font-size: 21px;
     text-transform: uppercase;
 }
+
 #legend a {
     text-decoration: none;
     color: inherit;
