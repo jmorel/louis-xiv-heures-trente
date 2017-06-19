@@ -33,7 +33,7 @@
         $heightSpan.text(Math.round(image.img.height * parseFloat($widthInput.val()) / image.img.width));
     };
 
-    var enableDebug = function (debugHour) {
+    window.enableDebug = function (debugHour) {
         DEBUG = true;
         if (debugHour) {
             $hourSelect.val(debugHour % 12);
@@ -47,7 +47,7 @@
         $('#debug').show();
     };
 
-    var disableDebug = function () {
+    window.disableDebug = function () {
         DEBUG = false;
         $('#debug').hide();
     };
@@ -283,5 +283,7 @@
     // init
     clockWork();
     resizeClock();
+
+    console.info("Type 'enableDebug()' to activate the debug panel and 'disableDebug()' when you're done.");
 
 }());
